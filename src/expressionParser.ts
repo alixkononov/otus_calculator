@@ -1,44 +1,60 @@
 import { Stack } from "tstl/container";
 import { isNumber } from "./helpers";
-import { BinaryOperationType, mathOperators, UnaryOperationType } from "./mathOperators";
+import { MathOperation, mathTokens } from "./mathOperators";
 
-export type PolishNotationToken = number | BinaryOperationType | UnaryOperationType;
+type Parentheses = "(" | ")"
+export type PolishNotationToken = number | MathOperation | Parentheses
 
-const isOperation = (item: string) => mathOperators.hasOwnProperty(item)
-export const parseToReversePolishNotation = (line: string) : PolishNotationToken[] => 
-{
-    const input = line.split(" ");
-    const stack =  new Stack<PolishNotationToken>() 
-    const output = Array<PolishNotationToken>()
+const isOperationToken = (item: string) => mathTokens.hasOwnProperty(item)
+
+const isMathOperation = (op: PolishNotationToken): op is MathOperation => {
+    const mathOp = op as MathOperation;
     
+    return mathOp?.Precedence !== undefined && mathOp?.Operation !== undefined;
+}
+
+export const parseToReversePolishNotation = (line: string): PolishNotationToken[] => {
+    const input = line.split(" ");
+    const stack = new Stack<PolishNotationToken>()
+    const output = Array<PolishNotationToken>()
+
     //Dejkstra Shunting-yard algorithm
     input.reduce<PolishNotationToken[]>((result, item, _) => {
-      
-        if(isNumber(item)){
+
+        if (isNumber(item)) {
             result.push(Number(item))
             return result;
         }
 
-        if(isOperation(item))
-        {
-            //todo compare with stack.top prority            
-            stack.push(mathOperators[item])
+        if (isOperationToken(item)) {
+            const currentOperation = mathTokens[item];
+            const stackTop = stack.top();
+
+            if (isMathOperation(stackTop) && stackTop.Precedence >= currentOperation.Precedence) {
+                result.push(stackTop)
+                stack.pop()
+            }
+
+            stack.push(currentOperation);
             return result;
         }
 
-        if(item == "("){
-            //todo push to stack
+        if (item == "(") {
+            stack.push(item);
             return result;
         }
 
-        if(item == ")")
-        {
-            //todo pop all from stack
+        if (item == ")") {
+            while(stack.top() !== "("){
+                result.push(stack.top());
+                stack.pop()
+            }
+            stack.pop();
             return result;
         }
 
         throw new TypeError("Unexpected token");
-      
+
     }, output);
     return output;
 

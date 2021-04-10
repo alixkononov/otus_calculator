@@ -1,5 +1,5 @@
 import { createInterface } from "readline";
-//import { runner } from "./runner";
+import { parseToReversePolishNotation } from "./expressionParser";
 
 const rl = createInterface({
     input: process.stdin,
@@ -9,7 +9,7 @@ const rl = createInterface({
 const question = (): Promise<null> =>
     new Promise((resolve: Function) => {
         rl.question("> ", (answer: string) => {
-            const result = 'qq';//runner(answer);
+            const result =  parseToReversePolishNotation(answer);//runner(answer);
 
             if (result) {
                 console.log(`Result: ${result}`);
