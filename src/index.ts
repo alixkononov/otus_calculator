@@ -1,5 +1,5 @@
 import { createInterface } from "readline";
-import { parseToReversePolishNotation } from "./rpnCalculator";
+import { parseToReversePolishNotation, calcRpn } from "./rpnCalculator";
 
 const rl = createInterface({
     input: process.stdin,
@@ -9,8 +9,8 @@ const rl = createInterface({
 const question = (): Promise<null> =>
     new Promise((resolve: Function) => {
         rl.question("> ", (answer: string) => {
-            const result =  parseToReversePolishNotation(answer);//runner(answer);
-
+            const rpn =  parseToReversePolishNotation(answer);
+            const result = calcRpn(rpn);
             if (result) {
                 console.log(`Result: ${result}`);
             }

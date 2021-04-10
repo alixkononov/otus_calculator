@@ -20,7 +20,7 @@ const isBinaryOperation = (op: Function) : op is BinaryOperationType => {
 
 
 export const parseToReversePolishNotation = (line: string): RPNToken[] => {
-    const input = line.split(" ");
+    const input = line.trim().split(" ");
     const stack = new Stack<RPNToken>()
     const output = Array<RPNToken>()
 

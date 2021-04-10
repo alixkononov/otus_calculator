@@ -6,6 +6,7 @@ test("adds 1 + 2 to equal 3", () => {
 });
 
 test("", () => {
-  const qq =  parseToReversePolishNotation("sqrt ( 3 + sin ( 3.14 ) - 1 / 2 ^ 2 )" )
+  //const qq =  parseToReversePolishNotation("sqrt ( 3 + sin ( 3.14 ) - 1 / 2 ^ 2 )" )
+  const qq =  parseToReversePolishNotation("1 + 2" )
   const result = calcRpn(qq);
 })
