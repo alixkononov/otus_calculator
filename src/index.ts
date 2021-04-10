@@ -1,5 +1,5 @@
 import { createInterface } from "readline";
-import { parseToReversePolishNotation } from "./expressionParser";
+import { parseToReversePolishNotation } from "./rpnCalculator";
 
 const rl = createInterface({
     input: process.stdin,

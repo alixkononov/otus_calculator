@@ -83,9 +83,9 @@ export const calcRpn = (tokens: Array<RPNToken>): number => {
             const operation = token as MathOperation;
 
             if (isBinaryOperation(operation.Operation)) {
-                const first = stack.top();
+                const second = stack.top();
                 stack.pop()
-                const second = stack.top()
+                const first = stack.top()
                 stack.pop()
                 const binaryOp = operation.Operation as BinaryOperationType;
                 stack.push(binaryOp(first, second))

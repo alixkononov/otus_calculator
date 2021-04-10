@@ -8,8 +8,6 @@ export interface MathOperation{
   Precedence: number
 }
 
-
-
 export const mul: BinaryOperationType = (
   first: number,
   second: number
@@ -35,9 +33,18 @@ export const power: BinaryOperationType = (
   second: number
 ): number => Math.pow(first, second);
 
+export const max: BinaryOperationType = (
+    first: number,
+    second: number
+): number => Math.max(first, second);
+
 export const sinus: UnaryOperationType = (
   first: number, 
 ): number => Math.sin(first);
+
+export const cosinus: UnaryOperationType = (
+    first: number,
+): number => Math.cos(first);
 
 export const sqrt: UnaryOperationType = (
   first: number, 
@@ -46,11 +53,13 @@ export const sqrt: UnaryOperationType = (
 export const mathTokens: { [key: string]: MathOperation} = {
   "sqrt": {Operation: sqrt, Precedence: 4},
   "sin": {Operation: sinus, Precedence: 4},
+  "cos": {Operation: cosinus, Precedence: 4},
+  "max":{Operation: max, Precedence: 4},
   "^": {Operation: power, Precedence: 3},
   "*": {Operation: mul, Precedence: 2},
   "/": {Operation: div, Precedence: 2},
   "+": {Operation: add, Precedence: 1},
-  "-": {Operation: add, Precedence: 1}
+  "-": {Operation: minus, Precedence: 1}
  
 };
 
